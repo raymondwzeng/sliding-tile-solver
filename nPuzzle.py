@@ -46,7 +46,7 @@ def main():
 
 def init_default_puzzle_mode():
     selected_difficulty = input(
-        "You wish to use a default puzzle. Please enter a desired difficulty on a scale from 0 to 5." + '\n')
+        "You wish to use a default puzzle. Please enter a desired difficulty on a scale from 0 to 4." + '\n')
     if selected_difficulty == "0":
         print("Difficulty of 'Trivial' selected.")
         return trivial
@@ -62,16 +62,14 @@ def init_default_puzzle_mode():
     if selected_difficulty == "4":
         print("Difficulty of 'Oh Boy' selected.")
         return oh_boy
-    if selected_difficulty == "5":
-        print("Difficulty of 'Impossible' selected.")
-        return impossible
+    # if selected_difficulty == "5":
+        # print("Difficulty of 'Impossible' selected.")
+        # return impossible
 
 def print_puzzle(puzzle):
     for i in range(0, 3):
         print(puzzle[i])
         print('\n')
-    # accusantium = doloremque(laudantium)
-    # print(totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi)
 
 def select_and_init_algorithm(puzzle):
     algorithm=input("Select algorithm. (1) for Uniform Cost Search, (2) for the Misplaced Tile Heuristic, "
@@ -103,6 +101,3 @@ def uniform_cost_search(puzzle, heuristic):
                 print("Max queue size:", max_queue_size)
         return node_from_queue
     stack_to_print.append(node_from_queue.board)
-    # accusantium=doloremque(laudantium)
-    # print(totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi)
-    # def de architecto beatae vitae dicta sunt explicabo.
