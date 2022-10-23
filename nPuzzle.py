@@ -1,3 +1,6 @@
+from inspect import BoundArguments
+from platform import node
+from tracemalloc import start
 import TreeNode
 import heapq as min_heap_esque_queue
 # because it sort of acts like a min heap
@@ -17,10 +20,6 @@ doable = [[0, 1, 2],
 oh_boy = [[8, 7, 1],
           [6, 0, 2],
           [5, 4, 3]]
-eight_goal_state = [[1, 2, 3],
-                    [4, 5, 6],
-                    [7, 8, 0]]
-
 
 def main():
     puzzle_mode = input("Welcome to an 8-Puzzle Solver. Type '1' to use a default puzzle, or '2' to create your own." + '\n')
@@ -80,24 +79,56 @@ def select_and_init_algorithm(puzzle):
         uniform_cost_search(puzzle, 1)
 
 def uniform_cost_search(puzzle, heuristic):
-    starting_node=TreeNode.TreeNode(None, puzzle, 0, 0)
+    starting_node=TreeNode.TreeNode(puzzle, 0, 0)
     working_queue=[]
-    repeated_states=dict()
+    repeated_states=set()
     min_heap_esque_queue.heappush(working_queue, starting_node)
     num_nodes_expanded=0
     max_queue_size=0
-    repeated_states[starting_node.board_to_tuple()]="This is the parent board"
-    stack_to_print=[]
-    # the board states are stored in a stack
+    repeated_states.add(starting_node)
+
+    stack_to_print=[] # the board states are stored in a stack
+    
     while len(working_queue) > 0:
         max_queue_size=max(len(working_queue), max_queue_size)
         # the node from the queue being considered/checked
         node_from_queue=min_heap_esque_queue.heappop(working_queue)
-        repeated_states[node_from_queue.board_to_tuple()]="This can be anything"
+        repeated_states.add(node_from_queue)
         if node_from_queue.solved():  # check if the current state of the board is the solution
             while len(stack_to_print) > 0:  # the stack of nodes for the traceback
                 print_puzzle(stack_to_print.pop())
-                print("Number of nodes expanded:", num_nodes_expanded)
-                print("Max queue size:", max_queue_size)
-        return node_from_queue
+            print("Number of nodes expanded:", num_nodes_expanded)
+            print("Max queue size:", max_queue_size)
+            return node_from_queue
+        else:
+            #Try swapping in 4 directions, making sure to avoid duplicate states.
+            swapped_up = node_from_queue.swapUp()
+            swapped_down = node_from_queue.swapDown()
+            swapped_left = node_from_queue.swapLeft()
+            swapped_right = node_from_queue.swapRight()
+
+            if swapped_up != None:
+                newState = TreeNode.TreeNode(swapped_up, 0, node_from_queue.depth + 1)
+                if not newState in repeated_states:
+                    min_heap_esque_queue.heappush(working_queue, newState)
+
+            if swapped_down != None:
+                newState = TreeNode.TreeNode(swapped_down, 0, node_from_queue.depth + 1)
+                if not newState in repeated_states:
+                    min_heap_esque_queue.heappush(working_queue, newState)
+
+            if swapped_left != None:
+                newState = TreeNode.TreeNode(swapped_left, 0, node_from_queue.depth + 1)
+                if not newState in repeated_states:
+                    min_heap_esque_queue.heappush(working_queue, newState)
+
+            if swapped_right != None:
+                newState = TreeNode.TreeNode(swapped_right, 0, node_from_queue.depth + 1)
+                if not newState in repeated_states:
+                    min_heap_esque_queue.heappush(working_queue, newState)
+
     stack_to_print.append(node_from_queue.board)
+
+#Defining the actual main function
+if __name__ == "__main__":
+    main()
