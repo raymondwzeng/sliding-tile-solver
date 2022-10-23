@@ -28,6 +28,16 @@ class TreeNode():
             hash_clone[rowIndex] = tuple(hash_clone[rowIndex])
         return hash(tuple(hash_clone))
 
+    #Helper functions to help comparison in the pq
+    def __eq__(self, other):
+        return self.getTotalDistance() == other.getTotalDistance()
+    
+    def __gt__(self, other):
+        return self.getTotalDistance() > other.getTotalDistance()
+
+    def __lt__(self, other):
+        return self.getTotalDistance() < other.getTotalDistance()
+
     def findZero(self): #Returns the row, col tuple of where the 0 is.
         currRow = 0
         currCol = 0
