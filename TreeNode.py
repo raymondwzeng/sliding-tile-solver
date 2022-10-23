@@ -7,12 +7,13 @@ goal_state = [[1, 2, 3],
                     [7, 8, 0]]
 
 class TreeNode():
-    # puzzle -> 2d square matrix
+    # board -> 2d square matrix
     # heuristic -> integer
     # depth -> integer 
-    def __init__(self, puzzle, heuristic, depth):
+    def __init__(self, parent, board, heuristic, depth):
         #Could implement a state here that defines more attributes of a state.
-        self.board = puzzle 
+        self.parent = parent
+        self.board = board
         self.heuristic = heuristic
         self.depth = depth
 
@@ -29,9 +30,6 @@ class TreeNode():
         return hash(tuple(hash_clone))
 
     #Helper functions to help comparison in the pq
-    def __eq__(self, other):
-        return self.getTotalDistance() == other.getTotalDistance()
-    
     def __gt__(self, other):
         return self.getTotalDistance() > other.getTotalDistance()
 
