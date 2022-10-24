@@ -23,11 +23,11 @@ class TreeNode():
     def solved(self):
         return self.board == goal_state
 
-    def __hash__(self) -> int:
-        hash_clone = copy.deepcopy(self.board)
-        for rowIndex in range(len(hash_clone)):
-            hash_clone[rowIndex] = tuple(hash_clone[rowIndex])
-        return hash(tuple(hash_clone))
+    def tostring(self):
+        hashString = ""
+        for row in self.board:
+            hashString = hashString.join(str(row))
+        return hashString
 
     #Helper functions to help comparison in the pq
     def __gt__(self, other):
@@ -75,10 +75,10 @@ class TreeNode():
             board_copy[row][col + 1], board_copy[row][col] = board_copy[row][col], board_copy[row][col + 1] #Swap in-place with the number to the right
             return board_copy
 
-    def findTile(self, target): #Finds a tile within the 2d matrix, and returns a tuple coordinate if it is found.
-        for row in range(len(self.board)):
-            for col in range(len(self.board[0])):
-                if self.board[row][col] == target:
+    def findTile(self, target, source): #Finds a tile within the 2d matrix, and returns a tuple coordinate if it is found.
+        for row in range(len(source)):
+            for col in range(len(source[0])):
+                if source[row][col] == target:
                    return (row, col) 
     
     def misplacedTiles(self): #Returns a list of misplaced tiles based off of the goal state in the form of a tuple of tuples.
@@ -95,7 +95,7 @@ class TreeNode():
         dX_total = 0
         dY_total = 0
         for pair in misplacedList:
-            goal_coord = self.findTile(self.board[pair[0]][pair[1]])
+            goal_coord = self.findTile(self.board[pair[0]][pair[1]], goal_state)
             dX_total += abs(goal_coord[0] - pair[0])
             dY_total += abs(goal_coord[1] - pair[1])
         return dX_total + dY_total

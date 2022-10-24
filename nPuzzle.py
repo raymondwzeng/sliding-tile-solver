@@ -95,7 +95,7 @@ def uniform_cost_search(puzzle, heuristic):
     min_heap_esque_queue.heappush(working_queue, starting_node)
     num_nodes_expanded=0
     max_queue_size=0
-    repeated_states.add(starting_node)
+    repeated_states.add(starting_node.tostring())
 
     stack_to_print=[] # the board states are stored in a stack
     
@@ -103,7 +103,7 @@ def uniform_cost_search(puzzle, heuristic):
         max_queue_size=max(len(working_queue), max_queue_size)
         # the node from the queue being considered/checked
         node_from_queue=min_heap_esque_queue.heappop(working_queue)
-        repeated_states.add(node_from_queue)
+        repeated_states.add(node_from_queue.tostring())
         if node_from_queue.solved():  # check if the current state of the board is the solution
             # while len(stack_to_print) > 0:  # the stack of nodes for the traceback
                 # print_puzzle(stack_to_print.pop())
@@ -124,8 +124,9 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += len(newState.misplacedTiles())
                 elif heuristic == 2:
                     newState.heuristic += newState.manhattanDistance()
-                if not newState in repeated_states:
+                if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
+                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_down != None:
@@ -134,8 +135,9 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += len(newState.misplacedTiles())
                 elif heuristic == 2:
                     newState.heuristic += newState.manhattanDistance()
-                if not newState in repeated_states:
+                if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
+                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_left != None:
@@ -144,8 +146,9 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += len(newState.misplacedTiles())
                 elif heuristic == 2:
                     newState.heuristic += newState.manhattanDistance()
-                if not newState in repeated_states:
+                if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
+                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_right != None:
@@ -154,10 +157,12 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += len(newState.misplacedTiles())
                 elif heuristic == 2:
                     newState.heuristic += newState.manhattanDistance()
-                if not newState in repeated_states:
+                if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
+                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
-
+        # print(f"Next state: with depth {working_queue[0].depth} and heuristic {working_queue[0].heuristic}\n")
+        # print(f"Board: {working_queue[0].board}\n")
         stack_to_print.append(node_from_queue.board)
 
 #Defining the actual main function
