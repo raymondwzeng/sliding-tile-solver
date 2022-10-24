@@ -74,4 +74,28 @@ class TreeNode():
             board_copy = copy.deepcopy(self.board)
             board_copy[row][col + 1], board_copy[row][col] = board_copy[row][col], board_copy[row][col + 1] #Swap in-place with the number to the right
             return board_copy
+
+    def findTile(self, target): #Finds a tile within the 2d matrix, and returns a tuple coordinate if it is found.
+        for row in range(len(self.board)):
+            for col in range(len(self.board[0])):
+                if self.board[row][col] == target:
+                   return (row, col) 
     
+    def misplacedTiles(self): #Returns a list of misplaced tiles based off of the goal state in the form of a tuple of tuples.
+        misplaced = []
+        for row in range(len(self.board)):
+            for col in range(len(self.board[0])):
+                if self.board[row][col] != goal_state[row][col]:
+                    misplacedPair = (row, col)
+                    misplaced.append(misplacedPair)
+        return misplaced
+
+    def manhattanDistance(self): #Calculates the total manhattan distance of a board based off of its place in the goal state.
+        misplacedList = self.misplacedTiles()
+        dX_total = 0
+        dY_total = 0
+        for pair in misplacedList:
+            goal_coord = self.findTile(self.board[pair[0]][pair[1]])
+            dX_total += abs(goal_coord[0] - pair[0])
+            dY_total += abs(goal_coord[1] - pair[1])
+        return dX_total + dY_total

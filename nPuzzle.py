@@ -85,6 +85,8 @@ def select_and_init_algorithm(puzzle):
         uniform_cost_search(puzzle, 0)
     if algorithm == "2":
         uniform_cost_search(puzzle, 1)
+    if algorithm == "3":
+        uniform_cost_search(puzzle, 2)
 
 def uniform_cost_search(puzzle, heuristic):
     starting_node=TreeNode.TreeNode(None, puzzle, 0, 0)
@@ -118,24 +120,40 @@ def uniform_cost_search(puzzle, heuristic):
 
             if swapped_up != None:
                 newState = TreeNode.TreeNode(node_from_queue, swapped_up, 0, node_from_queue.depth + 1)
+                if heuristic == 1:
+                    newState.heuristic += len(newState.misplacedTiles())
+                elif heuristic == 2:
+                    newState.heuristic += newState.manhattanDistance()
                 if not newState in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
                     num_nodes_expanded += 1
 
             if swapped_down != None:
                 newState = TreeNode.TreeNode(node_from_queue, swapped_down, 0, node_from_queue.depth + 1)
+                if heuristic == 1:
+                    newState.heuristic += len(newState.misplacedTiles())
+                elif heuristic == 2:
+                    newState.heuristic += newState.manhattanDistance()
                 if not newState in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
                     num_nodes_expanded += 1
 
             if swapped_left != None:
                 newState = TreeNode.TreeNode(node_from_queue, swapped_left, 0, node_from_queue.depth + 1)
+                if heuristic == 1:
+                    newState.heuristic += len(newState.misplacedTiles())
+                elif heuristic == 2:
+                    newState.heuristic += newState.manhattanDistance()
                 if not newState in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
                     num_nodes_expanded += 1
 
             if swapped_right != None:
                 newState = TreeNode.TreeNode(node_from_queue, swapped_right, 0, node_from_queue.depth + 1)
+                if heuristic == 1:
+                    newState.heuristic += len(newState.misplacedTiles())
+                elif heuristic == 2:
+                    newState.heuristic += newState.manhattanDistance()
                 if not newState in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
                     num_nodes_expanded += 1
