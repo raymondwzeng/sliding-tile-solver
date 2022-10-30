@@ -1,5 +1,6 @@
 import TreeNode
 import heapq as min_heap_esque_queue
+import time
 # because it sort of acts like a min heap
 # Below are some built-in puzzles to allow quick testing.
 trivial = [[1, 2, 3],
@@ -14,9 +15,10 @@ easy = [[1, 2, 0],
 doable = [[0, 1, 2],
           [4, 5, 3],
           [7, 8, 6]]
-oh_boy = [[8, 7, 1],
-          [6, 0, 2],
-          [5, 4, 3]]
+# oh_boy = [[8, 7, 1],
+#           [6, 0, 2],
+#           [5, 4, 3]]
+oh_boy = [[0, 7, 2],[4, 6, 1],[3, 5, 8]]
 
 def main():
     puzzle_mode = input("Welcome to an 8-Puzzle Solver. Type '1' to use a default puzzle, or '2' to create your own." + '\n')
@@ -85,6 +87,7 @@ def select_and_init_algorithm(puzzle):
         uniform_cost_search(puzzle, 2)
 
 def uniform_cost_search(puzzle, heuristic):
+    timestart = time.time()
     starting_node=TreeNode.TreeNode(None, puzzle, 0, 0)
     working_queue=[]
     repeated_states=set()
@@ -106,6 +109,7 @@ def uniform_cost_search(puzzle, heuristic):
             print_solution(node_from_queue)
             print("Number of nodes expanded:", num_nodes_expanded)
             print("Max queue size:", max_queue_size)
+            print("Time elapsed:", time.time() - timestart)
             return node_from_queue
         else:
             #Try swapping in 4 directions, making sure to avoid duplicate states.
