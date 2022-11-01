@@ -1,5 +1,5 @@
 # Author: Raymond Zeng
-# A simple tree-node implementation that represents a state in a decision tree.
+# A simple tree-node implementation that represents a state in a search tree.
 import copy
 
 goal_state = [[1, 2, 3],
