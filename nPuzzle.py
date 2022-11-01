@@ -104,7 +104,7 @@ def uniform_cost_search(puzzle, heuristic):
             print_solution(node_from_queue)
             print("Number of nodes expanded:", num_nodes_expanded)
             print("Max queue size:", max_queue_size)
-            print("Time elapsed:", time.time() - timestart)
+            print("Time elapsed:", round((time.time() - timestart) * 1000, 3), "ms")
             return node_from_queue
         else:
             #Try swapping in 4 directions, making sure to avoid duplicate states.
@@ -121,7 +121,6 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += newState.manhattanDistance()
                 if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
-                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_down != None:
@@ -132,7 +131,6 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += newState.manhattanDistance()
                 if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
-                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_left != None:
@@ -143,7 +141,6 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += newState.manhattanDistance()
                 if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
-                    repeated_states.add(newState.tostring())
                     num_nodes_expanded += 1
 
             if swapped_right != None:
@@ -154,10 +151,9 @@ def uniform_cost_search(puzzle, heuristic):
                     newState.heuristic += newState.manhattanDistance()
                 if not newState.tostring() in repeated_states:
                     min_heap_esque_queue.heappush(working_queue, newState)
-                    repeated_states.add(newState.tostring())
-                    num_nodes_expanded += 1
+                    num_nodes_expanded += 1              
         if len(working_queue) > 0: #Safeguard against out-of-bounds error if no solution exists.
-            print(f"Next state: with depth {working_queue[0].depth} and heuristic {working_queue[0].heuristic}\n")
+            print(f"Next state: with depth {working_queue[0].depth} and heuristic {working_queue[0].heuristic}")
             print(f"Board: {working_queue[0].board}\n")
 
     print("Unable to solve the puzzle - all states have been exhausted.")

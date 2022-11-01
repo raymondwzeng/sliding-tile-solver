@@ -30,11 +30,12 @@ class TreeNode():
         return hashString
 
     #Helper functions to help comparison in the pq
-    def __gt__(self, other):
-        return self.getTotalDistance() > other.getTotalDistance()
-
     def __lt__(self, other):
-        return self.getTotalDistance() < other.getTotalDistance()
+        if self.getTotalDistance() < other.getTotalDistance():
+            return True
+        elif self.getTotalDistance() == other.getTotalDistance():
+            return self.depth < other.depth
+        return False
 
     def findZero(self): #Returns the row, col tuple of where the 0 is.
         currRow = 0
@@ -85,7 +86,7 @@ class TreeNode():
         misplaced = []
         for row in range(len(self.board)):
             for col in range(len(self.board[0])):
-                if self.board[row][col] != goal_state[row][col]:
+                if self.board[row][col] != goal_state[row][col] and goal_state[row][col] != 0:
                     misplacedPair = (row, col)
                     misplaced.append(misplacedPair)
         return misplaced
