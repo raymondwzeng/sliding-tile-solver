@@ -6,6 +6,12 @@ goal_state = [[1, 2, 3],
                     [4, 5, 6],
                     [7, 8, 0]]
 
+goal_map = {}
+
+for row in range(len(goal_state)):
+    for col in range(len(goal_state[row])):
+        goal_map[goal_state[row][col]] = (row, col)
+
 class TreeNode():
     # board -> 2d square matrix
     # heuristic -> integer
@@ -77,6 +83,8 @@ class TreeNode():
             return board_copy
 
     def findTile(self, target, source): #Finds a tile within the 2d matrix, and returns a tuple coordinate if it is found.
+        if source == goal_state: #Return the goal state cached coordinate
+            return goal_map[target]
         for row in range(len(source)):
             for col in range(len(source[0])):
                 if source[row][col] == target:
