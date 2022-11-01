@@ -61,7 +61,7 @@ def init_default_puzzle_mode():
         return oh_boy
 
 def print_puzzle(puzzle):
-    for i in range(0, 3):
+    for i in range(len(puzzle)):
         print(puzzle[i])
     print('\n')
 
