@@ -25,7 +25,7 @@ def main():
         select_and_init_algorithm(init_default_puzzle_mode())
     if puzzle_mode == "2":
         print("Enter your puzzle, using a zero to represent the blank. " +
-        "Please only enter valid 8-puzzles. Enter the puzzle demilimiting " +
+        "Please only enter valid 8-puzzles. Enter the puzzle delimiting " +
         "the numbers with a space. RET only when finished." + '\n')
         puzzle_row_one = input("Enter the first row: ")
         puzzle_row_two = input("Enter the second row: ")
