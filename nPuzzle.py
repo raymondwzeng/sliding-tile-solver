@@ -76,8 +76,7 @@ def print_solution(node):
     print(f"Depth: {depth}")
 
 def select_and_init_algorithm(puzzle):
-    algorithm=input("Select algorithm. (1) for Uniform Cost Search, (2) for the Misplaced Tile Heuristic, "
-                    "or (3) the Manhattan Distance Heuristic." + '\n')
+    algorithm=input("Select algorithm. (1) for Uniform Cost Search, (2) for the Misplaced Tile Heuristic, or (3) the Manhattan Distance Heuristic.\n")
     if algorithm == "1":
         uniform_cost_search(puzzle, 0)
     if algorithm == "2":
